@@ -375,7 +375,7 @@ class LaravelBulksms
         }
         $response = curl_exec($ch);
         $error    = curl_error($ch);
-        curl_close($ch);
+        unset($ch);
 
         if ($response === false && $error) {
             Log::error('BulkSMS GET failed: ' . $error);
@@ -408,7 +408,7 @@ class LaravelBulksms
         }
         $response = curl_exec($ch);
         $error    = curl_error($ch);
-        curl_close($ch);
+        unset($ch);
 
         if ($response === false && $error) {
             Log::error('BulkSMS POST failed: ' . $error);
