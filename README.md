@@ -176,6 +176,11 @@ composer test
 The suite uses `api_mode = dry`, so it never calls a real gateway. It is written
 for PHP 7.3 – 8.5 and Laravel 8 – 13 (testbench resolves the matching version).
 
+Because the older matrix entries install end-of-life framework versions
+(Laravel 8 – 10 on PHP 7.3 – 8.1), `config.policy.advisories.block` is disabled
+in this repository: those advisories concern the framework used to *run* the
+tests, not the code this package ships.
+
 ## Changelog
 
 See [CHANGELOG](CHANGELOG.md) for what changed recently.
