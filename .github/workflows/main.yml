@@ -1,0 +1,41 @@
+name: Tests
+
+on:
+  push:
+    branches: ['*']
+  pull_request:
+    branches: ['*']
+
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        php: ['7.3', '7.4', '8.0', '8.1', '8.2', '8.3', '8.4', '8.5']
+        dependency-versions: ['']
+        include:
+          - php: '7.3'
+            dependency-versions: '--prefer-lowest'
+
+    name: PHP ${{ matrix.php }}
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php }}
+          extensions: curl, json, mbstring
+          coverage: none
+          tools: composer:v2
+
+      - name: Install dependencies
+        run: >-
+          composer update --prefer-dist --no-interaction --no-progress
+          ${{ matrix.dependency-versions }}
+
+      - name: Run tests
+        run: composer test
