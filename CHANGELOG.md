@@ -2,6 +2,12 @@
 
 All notable changes to `laravel-bulksms` will be documented in this file
 
+## 1.0.8 - 2026-10-21
+
+- no runtime changes: only the development dependencies and the Composer policy
+  were adjusted so the test matrix can resolve on PHP 7.3 - 8.5 (the older
+  entries install the end-of-life framework versions the tests run against)
+
 ## 1.0.7 - 2026-10-21
 
 - fixed: the implementation class `BluedotBd\LaravelBulksms\LaravelBulksms` was never shipped, so

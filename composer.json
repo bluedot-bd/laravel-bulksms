@@ -6,7 +6,7 @@
         "laravel-bulksms",
         "laravel-bulksmsbd"
     ],
-    "version": "1.0.7",
+    "version": "1.0.8",
     "homepage": "https://github.com/bluedot-bd/laravel-bulksms",
     "license": "MIT",
     "type": "library",
