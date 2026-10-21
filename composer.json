@@ -1,12 +1,12 @@
 {
-    "name": "bluedot-bd/laravel-bulksms",
+    "name": "bluedot-bd/laravel-bulk-sms",
     "description": "'laravel-bulksms' is a Laravel package for integrating with an HTTP-based SMS gateway. The package is compatible with SMS providers in Bangladesh and other countries, and allows for the sending of notifications via Laravel notifications. It also includes a feature for checking the balance of an SMS account with a supported provider. This package can be useful for integrating SMS functionality into a Laravel-based application, sending sms messages to people, and keeping track of SMS usage and account balances.",
     "keywords": [
         "bluedot-bd",
         "laravel-bulksms",
         "laravel-bulksmsbd"
     ],
-    "version": "1.0.6",
+    "version": "1.0.7",
     "homepage": "https://github.com/bluedot-bd/laravel-bulksms",
     "license": "MIT",
     "type": "library",
@@ -19,7 +19,8 @@
     ],
     "require": {
         "php": "^7.3|^8.0",
-        "illuminate/support": "*"
+        "ext-curl": "*",
+        "illuminate/support": "^8.0|^9.0|^10.0|^11.0|^12.0|^13.0"
     },
     "require-dev": {
         "orchestra/testbench": "^6.0",

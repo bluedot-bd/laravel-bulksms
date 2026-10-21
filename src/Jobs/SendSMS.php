@@ -2,12 +2,12 @@
 
 namespace BluedotBd\LaravelBulksms\Jobs;
 
+use BluedotBd\LaravelBulksms\LaravelBulksms;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
-use LaravelBulksms;
 
 class SendSMS implements ShouldQueue
 {
@@ -18,23 +18,25 @@ class SendSMS implements ShouldQueue
     /**
      * Create a new job instance.
      *
-     * @return void
+     * @param string $config  config file name
+     * @param string $number  recipient number
+     * @param string $message message text
      */
     public function __construct($config, $number, $message)
     {
-        $this->message = $message;
-        $this->number  = $number;
         $this->config  = $config;
+        $this->number  = $number;
+        $this->message = $message;
     }
 
     /**
      * Execute the job.
-     *
-     * @return void
      */
     public function handle()
     {
-        $sms = new LaravelBulksms($this->config);
-        $sms->to($this->number)->message($this->message)->send();
+        (new LaravelBulksms($this->config))
+            ->to($this->number)
+            ->message($this->message)
+            ->send();
     }
 }

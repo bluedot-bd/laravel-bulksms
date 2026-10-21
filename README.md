@@ -1,6 +1,6 @@
-# Very short description of the package
+# Laravel Bulk SMS
 
-[![Latest Version on Packagist](https://img.shields.io/packagist/v/bluedot-bd/laravel-bulk-sms.svg?style=flat-square)](https://packagist.org/packages/bluedot-bd/bluedot-bd/laravel-bulk-sms)
+[![Latest Version on Packagist](https://img.shields.io/packagist/v/bluedot-bd/laravel-bulk-sms.svg?style=flat-square)](https://packagist.org/packages/bluedot-bd/laravel-bulk-sms)
 [![Total Downloads](https://img.shields.io/packagist/dt/bluedot-bd/laravel-bulk-sms.svg?style=flat-square)](https://packagist.org/packages/bluedot-bd/laravel-bulk-sms)
 ![GitHub Actions](https://github.com/bluedot-bd/laravel-bulksms/actions/workflows/main.yml/badge.svg)
 
@@ -16,10 +16,11 @@ composer require bluedot-bd/laravel-bulk-sms
 
 ## Usage
 
-Check and Save Config
+Create and save the gateway config
 ```php
-use LaravelBulksms;
-$sms = new LaravelBulksms(); // config name not needed
+use BluedotBd\LaravelBulksms\LaravelBulksms;
+
+$sms = new LaravelBulksms(); // config name not needed here
 $params = [
     'api_mode'         => 'dry', // dry/live
     'send_method'      => 'GET', // GET/POST
@@ -45,7 +46,7 @@ try {
 
 You can use it in Notification (for sending sms):
 ```php
-use LaravelBulksms;
+use BluedotBd\LaravelBulksms\LaravelBulksms;
 use BluedotBd\LaravelBulksms\SmsChannel;
 
 public function via($notifiable)
@@ -61,20 +62,30 @@ public function via($notifiable)
 public function toSms($notifiable)
 {
     return (new LaravelBulksms("config_file_name"))
-        ->to()
-        ->line();
+        ->to($notifiable->mobile)
+        ->line('First line')
+        ->line('Second line');
 }
 ```
 
 or you can use it directly:
 ```php
-use LaravelBulksms;
+use BluedotBd\LaravelBulksms\LaravelBulksms;
+
 $sms = new LaravelBulksms("config_file_name");
 try {
     $sms->to('01xxxx')->message('Your SMS Text')->send();   
 } catch (Exception $e) {
     // SMS Sending Error
 }
+```
+
+The package also ships a facade, so the same instance can be resolved from the container:
+```php
+use LaravelBulksms;
+
+LaravelBulksms::to('01xxxx')->message('Your SMS Text')->send();
+LaravelBulksms::balance();
 ```
 
 or Send SMS useing Laravel Queued Jobs
@@ -88,7 +99,8 @@ dispatch((new BluedotBd\LaravelBulksms\Jobs\SendSMS($config,$number, $message))-
 
 Get Balance if Supported
 ```php
-use LaravelBulksms;
+use BluedotBd\LaravelBulksms\LaravelBulksms;
+
 $sms = new LaravelBulksms("config_file_name");
 $sms->balance(); // returns float
 ```
